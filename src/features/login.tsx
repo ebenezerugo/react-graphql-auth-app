@@ -1,4 +1,12 @@
+import { useMutation } from '@apollo/client';
+import { useEffect } from 'react';
 import { useForm, Resolver } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import {login} from '../store/auth.slice';
+import LOGIN_USER from '../queries/login.query';
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 type FormValues = {
     email: string;
@@ -30,7 +38,21 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver });
-    const onSubmit = handleSubmit((data) => console.log(data));
+
+    const dispatch = useDispatch();
+    const [loginFunction, {loading, error, data}] = useMutation(LOGIN_USER);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (data) {
+            dispatch(login(data));
+            navigate("/dashboard");
+        }
+    }, [loading]);
+
+    const onSubmit = handleSubmit((payload) => {
+        loginFunction({variables: payload});
+    });
 
     return (
         <div className="container">
@@ -38,7 +60,7 @@ const Login = () => {
                 <div className="col-8 mx-auto mt-5 bg-white p-5">
                     <div className="mb-3 text-center">
                         <div className="fs-3 fw-bold">Log in</div>
-                        <div>If you have no account? <span className="highlighted-text">Sign up</span></div>
+                        <div>If you have no account? <span><Link className="highlighted-text" to={'/signup'}>Sign up</Link></span></div>
                     </div>
                     <form className="row g-3" onSubmit={onSubmit}>
                         <div className="col-12">
@@ -53,9 +75,18 @@ const Login = () => {
                         </div>
                         <div className="col-12">
                             <div className="d-grid gap-2">
-                                <button type="submit" className="btn btn-secondary">Login</button>
+                                <button type="submit" disabled={loading} className="btn btn-secondary">
+                                    {loading ? <div className="spinner-grow" role="status"><span className="visually-hidden">Loading...</span></div> : 'Login' }
+                                </button>
                             </div>
                         </div>
+                        {error &&
+                            <div className="col-12">
+                                <div className="alert alert-danger" role="alert">
+                                    {error.message}
+                                </div>
+                            </div>
+                        }
                     </form>
                 </div>
             </div>

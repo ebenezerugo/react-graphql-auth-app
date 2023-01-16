@@ -16,3 +16,7 @@ code {
 .highlighted-text {
   color: #004CBD
 }
+
+a {
+  text-decoration: none;
+}
