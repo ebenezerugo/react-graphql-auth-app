@@ -73,7 +73,7 @@ const Signup = () => {
             dispatch(signup(data));
             navigate("/dashboard");
         }
-    }, [loading]);
+    }, [loading,data, dispatch, navigate]);
 
     const onSubmit = handleSubmit((payload) => {
         signupFunction({variables: payload});
@@ -91,22 +91,22 @@ const Signup = () => {
                         <div className="col-md-6">
                             <label htmlFor="inputFirstname" className="form-label">First Name</label>
                             <input type="text" {...register("first_name")} className="form-control" id="inputFirstname" placeholder="Type here"/>
-                            {errors?.first_name && <p>{errors.first_name.message}</p>}
+                            {errors?.first_name && <p className='text-danger'>{errors.first_name.message}</p>}
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="inputLastName" className="form-label">Last Name</label>
                             <input type="text" {...register("last_name")} className="form-control" id="inputLastName" placeholder="Type here"/>
-                            {errors?.last_name && <p>{errors.last_name.message}</p>}
+                            {errors?.last_name && <p className='text-danger'>{errors.last_name.message}</p>}
                         </div>
                         <div className="col-12">
                             <label htmlFor="inputEmail" className="form-label">Email Address</label>
                             <input type="text" {...register("email")} className="form-control" id="inputEmail" placeholder="Type your email address here"/>
-                            {errors?.email && <p>{errors.email.message}</p>}
+                            {errors?.email && <p className='text-danger'>{errors.email.message}</p>}
                         </div>
                         <div className="col-12">
                             <label htmlFor="inputPassword" className="form-label">Password</label>
                             <input type="password" {...register("password")} className="form-control" id="inputPassword" placeholder="Type your password here"/>
-                            {errors?.password && <p>{errors.password.message}</p>}
+                            {errors?.password && <p className='text-danger'>{errors.password.message}</p>}
                         </div>
                         <div className="col-12">
                             <div className="d-grid gap-2">

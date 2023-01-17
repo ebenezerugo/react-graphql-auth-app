@@ -1,5 +1,5 @@
 import { gql  } from '@apollo/client';
-import User from '../models/user.model';
+// import User from '../models/user.model';
 
 // type AuthResponse = {
 //   user: User

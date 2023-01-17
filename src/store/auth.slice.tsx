@@ -4,7 +4,7 @@ import User from '../models/user.model';
 type AuthState = {
     isLoggedIn: boolean;
     token: string|null;
-    user: User|null;
+    user?: User;
 }
 
 const initialState: AuthState = {
@@ -32,11 +32,14 @@ export const authSlice = createSlice({
         logout: (state, action) => {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            return {...state, isLoggedIn:false, token: '', user: null};
+            return {...state, isLoggedIn:false, token: ''};
+        },
+        verifyMe: (state, action) => {
+
         }
     }
 })
 
-export const {login, signup, logout} = authSlice.actions;
+export const {login, signup, logout, verifyMe} = authSlice.actions;
 
 export default authSlice.reducer;

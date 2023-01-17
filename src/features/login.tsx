@@ -48,7 +48,7 @@ const Login = () => {
             dispatch(login(data));
             navigate("/dashboard");
         }
-    }, [loading]);
+    }, [loading, data, dispatch, navigate]);
 
     const onSubmit = handleSubmit((payload) => {
         loginFunction({variables: payload});
@@ -66,12 +66,12 @@ const Login = () => {
                         <div className="col-12">
                             <label htmlFor="inputEmail" className="form-label">Email Address</label>
                             <input type="text" {...register("email")} className="form-control" id="inputEmail" placeholder="Type your email address here"/>
-                            {errors?.email && <p>{errors.email.message}</p>}
+                            {errors?.email && <p className='text-danger'>{errors.email.message}</p>}
                         </div>
                         <div className="col-12">
                             <label htmlFor="inputPassword" className="form-label">Password</label>
                             <input type="password" {...register("password")} className="form-control" id="inputPassword" placeholder="Type your password here"/>
-                            {errors?.password && <p>{errors.password.message}</p>}
+                            {errors?.password && <p className='text-danger'>{errors.password.message}</p>}
                         </div>
                         <div className="col-12">
                             <div className="d-grid gap-2">
