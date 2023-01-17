@@ -36,8 +36,8 @@ const ItemsComponent = () => {
           
     return (
         <div className="row">
-            {data.getItems.items.map((item: Item) => {
-                return <div className="col-md-4">
+            {data.getItems.items.map((item: Item, index: number) => {
+                return <div key={index} className="col-md-4">
                     <ItemComponent uuid={item.uuid} name={item.name} description={item.description} />
                 </div>
             })}
