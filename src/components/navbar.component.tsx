@@ -1,11 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import {logout} from '../store/auth.slice';
 
 const NavbarComponent = () => {
-
+    const dispatch = useDispatch();
     const fullname = useSelector((state: RootState) => {
         return `${state.auth.user?.first_name} ${state.auth.user?.last_name}`;
     })
+
+    const logoutUser = () => {
+        dispatch(logout(null));
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,7 +30,7 @@ const NavbarComponent = () => {
                                     {fullname}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                                    <li onClick={() => {logoutUser()}}><span className="dropdown-item pointer">Logout</span></li>
                                 </ul>
                                 </li>
                             </ul>
